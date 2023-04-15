@@ -1,17 +1,12 @@
 package com.luv2code.springcoredemo.common;
 
+public class SwimCoach implements Coach {
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class BaseballCoach implements Coach {
-
-    public BaseballCoach() {
+    public SwimCoach() {
         System.out.println("In constructor: " + getClass().getSimpleName());
     }
-
     @Override
     public String getDailyWorkout() {
-        return "Beep beep beep";
+        return "slerp a slorpy glorp";
     }
 }
