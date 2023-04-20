@@ -36,7 +36,7 @@ public class StudentRestController {
     public Student getStudent(@PathVariable int studentId) {
 
         // check the studentId against list size
-        if ((studentId <= theStudents.size()) || (studentId < 0)) {
+        if ((studentId >= theStudents.size()) || (studentId < 0)) {
             throw new StudentNotFoundException("Student ID not found - " + studentId);
         }
         // index into the list
@@ -55,5 +55,19 @@ public class StudentRestController {
         // return ResponseEntity
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    // add another exception handler to catch any exception
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(Exception exc) {
+        // create a StudentErrorResponse
+        StudentErrorResponse error = new StudentErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return ResponseEntity
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
