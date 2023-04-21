@@ -4,10 +4,7 @@ package com.luv2code.springboot.cruddemo.rest;
 import com.luv2code.springboot.cruddemo.dao.EmployeeDAO;
 import com.luv2code.springboot.cruddemo.entity.Employee;
 import com.luv2code.springboot.cruddemo.service.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,14 @@ public class EmployeeRestController {
             throw new RuntimeException("Employee ID not found - " + employeeId);
         }
         return theEmployee;
+    }
+
+    // add mapping for POST
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee theEmployee) {
+        // set ID to 0 in case an ID is passed to force to save a new item rather than update
+        theEmployee.setId(0);
+        Employee dbEmployee = employeeService.save(theEmployee);
+        return dbEmployee;
     }
 }
